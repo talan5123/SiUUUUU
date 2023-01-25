@@ -8,14 +8,16 @@ class Auto():
     max_fuel = 100 # объём бака
     rasxod = 0.0 # расход топлива на 100
     way = 0 # пройдненый путь
+    passangers = 0 # седушки
     
-    def __init__(self, color = '', power = 0, max_fuel=0, rasxod=0.0, float=0, fuel_left=0, way=0):
+    def __init__(self, color = '', power = 0, max_fuel = 0, rasxod = 0.0, float = 0, fuel_left = 0, way = 0, passangers = 1):
         self.set_color(color)
         self.power = power
         self.max_fuel = max_fuel
         self.rasxod = rasxod
         self.set_fuel(fuel_left)
         self.way = way
+        self.passangers = passangers
         
         
     def print(self):
@@ -23,7 +25,8 @@ class Auto():
         Пройденный путь: {self.way},
         Оставшееся топливо:{self.fuel_left},
         Расход топлива: {self.rasxod},
-        Мощность: {self.power}''')
+        Мощность: {self.power},
+        Колличество пассажирских сидений: {self.passangers}''')
         
         
     def set_color(self, color):
@@ -64,13 +67,20 @@ class Auto():
             return 'YES'
         else:
             return 'NO'
+            
+    def set_passangers(self, passangers):
+        self.passangers = passangers
+        """
+        седушки
+        """
         
 def test_init_1():
     Auto(color='white',
         power=90,
         max_fuel=50,
         rasxod=9.3,
-        fuel_left=0)
+        fuel_left=0,
+        passangers=0)
 
 
 def test_init_2(color = 'blue'):
@@ -82,7 +92,8 @@ def test_color_1():
             power=90,
             max_fuel=50,
             rasxod=9.3,
-            fuel_left=0)
+            fuel_left=0,
+            passangers=3)
     assert c.get_color() == 'white'
 
 
@@ -91,9 +102,10 @@ def test_color_2():
             power=90,
             max_fuel=50,
             rasxod=9.3,
-            fuel_left=0)
+            fuel_left=0,
+            passangers=3)
     assert c.get_color() == 'white'
-    c.set_color('red')
+    c.set_color('black')
 
 
 def test_color_3():
@@ -101,19 +113,23 @@ def test_color_3():
             power=90,
             max_fuel=50,
             rasxod=9.3,
-            fuel_left=0)
+            fuel_left=0,
+            passangers=3)
     assert c.get_color() == 'white'
-    c.set_color('red')
+    c.set_color('black')
     assert c.is_white() == 'NO'
-    assert c.get_color() == 'red'
+    assert c.get_color() == 'black'
     
-bw = Auto('red', 300, 100, 6.0,50, 100)
-bw.print()
-bw.set_color('orange')
-bw.set_way(100)
-bw.print()
-bw.set_way(80)
-bw.print()
+aa = Auto('black', 300, 100, 6.0,50, 100, 0,)
+aa.print()
+aa.set_color('orange')
+aa.set_way(100)
+aa.set_passangers(3)
+aa.print()
+aa.set_color('red')
+aa.set_way(90)
+aa.set_passangers(7)
+aa.print()
 test_init_1()
 test_init_2()
 test_color_1()
