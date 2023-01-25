@@ -1,10 +1,13 @@
 class Auto():
+    """
+    класс автомобиль
+    """
     color = 'white' # цвет
     power =  0 # мощность двигателя
-    fuel_left = 0 # объем бака
-    max_fuel = 100 # расход топлива на 100 км
-    rasxod = 0.0 # топлива в баке сейчас
-    way = 0 
+    fuel_left = 0 # топлива в баке сейчас
+    max_fuel = 100 # объём бака
+    rasxod = 0.0 # расход топлива на 100
+    way = 0 # пройдненый путь
     
     def __init__(self, color = '', power = 0, max_fuel=0, rasxod=0.0, float=0, fuel_left=0, way=0):
         self.set_color(color)
@@ -25,19 +28,31 @@ class Auto():
         
     def set_color(self, color):
         self.color = color
+        """
+        перекрасить автомобиль
+        """
         
     def get_color(self):
         return self.color
+        """
+        узнать цвет
+        """
         
     def set_fuel(self, fuel_left):
         if 0 > fuel_left or fuel_left > self.max_fuel:
             raise BaseException()
         self.fuel_left = fuel_left
+        """
+        топлива есть сейчас
+        """
         
     
     def set_way(self, way):
         self.way += way
         self.minus_fuel(way)
+        """
+        пройдненный путь
+        """
     
     def minus_fuel(self, way):
         self.fuel_left = self.fuel_left - self.way / 100 * self.rasxod
@@ -94,10 +109,10 @@ def test_color_3():
     
 bw = Auto('red', 300, 100, 6.0,50, 100)
 bw.print()
-bw.set_color('blue')
+bw.set_color('orange')
 bw.set_way(100)
 bw.print()
-bw.set_way(99)
+bw.set_way(80)
 bw.print()
 test_init_1()
 test_init_2()
