@@ -1,62 +1,106 @@
-class Car:
-    def __init__(self, color: str = 'Silver', power: int = 70, fuel: float = 50, rashod: float = 25, fuel_shas: float = 30, rashod_km: float = 0.25):
-        self.color = color
+class Auto():
+    color = 'white' # цвет
+    power =  0 # мощность двигателя
+    fuel_left = 0 # объем бака
+    max_fuel = 100 # расход топлива на 100 км
+    rasxod = 0.0 # топлива в баке сейчас
+    way = 0 
+    
+    def __init__(self, color = '', power = 0, max_fuel=0, rasxod=0.0, float=0, fuel_left=0, way=0):
+        self.set_color(color)
         self.power = power
-        self.fuel = fuel
-        self.rashod = rashod
-        self.fuel_shas = fuel_shas
-        self.rashod_km = rashod_km
-    def get_color(self):
-        return self.color
-    def get_power(self):
-        return self.power
-    def get_fuel(self):
-        return self.fuel
-    def get_rashod(self):
-        return self.rashod
-    def get_rashod_km(self):
-        return self.rashod_km
+        self.max_fuel = max_fuel
+        self.rasxod = rasxod
+        self.set_fuel(fuel_left)
+        self.way = way
+        
+        
+    def print(self):
+        print(        f''' Цвет: {self.color}, 
+        Пройденный путь: {self.way},
+        Оставшееся топливо:{self.fuel_left},
+        Расход топлива: {self.rasxod},
+        Мощность: {self.power}''')
+        
+        
     def set_color(self, color):
         self.color = color
+        
+    def get_color(self):
         return self.color
-    def set_fuel (self, fuel):
-        self.fuel = fuel
-        return self.fuel
-    def get_fuel_shas (self):
-        return self.fuel_shas
-    def get_benzin (self):
-        return self.benz_shas
-    def set_fuel_shas (self, fuel_shas):
-        self.fuel_shas = fuel_shas
-        return self.fuel_shas
-    def get_zapravka (self):
-        return self.fuel - self.fuel_shas
-    def zapravka (self, benzin):
-        if self.fuel >= self.fuel_shas:
-            if benzin > c.get_zapravka():
-                print ('Столько не залить')
-            else:
-                 self.fuel_shas += benzin
-                 return self.fuel_shas
+        
+    def set_fuel(self, fuel_left):
+        if 0 > fuel_left or fuel_left > self.max_fuel:
+            raise BaseException()
+        self.fuel_left = fuel_left
+        
+    
+    def set_way(self, way):
+        self.way += way
+        self.minus_fuel(way)
+    
+    def minus_fuel(self, way):
+        self.fuel_left = self.fuel_left - self.way / 100 * self.rasxod
+        if self.fuel_left < 0:
+            raise BaseException()
+            
+    def is_white(self):
+        if self.color == 'white':
+            return 'YES'
         else:
-            print ('Тебе хватит')
-    def probeg(self):
-        return self.fuel_shas / self.rashod_km
+            return 'NO'
+        
+def test_init_1():
+    Auto(color='white',
+        power=90,
+        max_fuel=50,
+        rasxod=9.3,
+        fuel_left=0)
 
-c = Car(color = 'Black', power = 70, fuel = 50, rashod = 25, fuel_shas = 30, rashod_km = 0.25)
-print ('Цвет:', c.get_color())
-print ('Мощность:', c.get_power())
-print ('Вместимость бакака:', c.get_fuel())
-print ('Расход:', c.get_rashod())
-print ('Можно проехать:', c.probeg())
 
-print ()
+def test_init_2(color = 'blue'):
+    Auto(color='white')
 
-c.set_color('Black')
-c.set_fuel(50)
-print (f'Перекрашена в: {c.get_color()} цвет' )
-print (f'Максимальная вместимость бака: {c.get_fuel()} литров')
-print (f'В баке щас: {c.get_fuel_shas()} литров')
-print (f'Можно залить на: {c.get_zapravka()} литров')
-c.zapravka(10)
-print (f'Можно проехать: {c.probeg()}')
+
+def test_color_1():
+    c = Auto(color='white',
+            power=90,
+            max_fuel=50,
+            rasxod=9.3,
+            fuel_left=0)
+    assert c.get_color() == 'white'
+
+
+def test_color_2():
+    c = Auto(color='white',
+            power=90,
+            max_fuel=50,
+            rasxod=9.3,
+            fuel_left=0)
+    assert c.get_color() == 'white'
+    c.set_color('red')
+
+
+def test_color_3():
+    c = Auto(color='white',
+            power=90,
+            max_fuel=50,
+            rasxod=9.3,
+            fuel_left=0)
+    assert c.get_color() == 'white'
+    c.set_color('red')
+    assert c.is_white() == 'NO'
+    assert c.get_color() == 'red'
+    
+bw = Auto('red', 300, 100, 6.0,50, 100)
+bw.print()
+bw.set_color('blue')
+bw.set_way(100)
+bw.print()
+bw.set_way(99)
+bw.print()
+test_init_1()
+test_init_2()
+test_color_1()
+test_color_2()
+test_color_3()
